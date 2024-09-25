@@ -1,0 +1,11 @@
+/* 添加这段到你的全局 CSS 或组件 CSS 文件 */
+.droppable {
+  display: flex;
+  flex-direction: column;
+}
+
+.draggable {
+  &:not(:first-child) {
+    margin-top: 10px;
+  }
+}
