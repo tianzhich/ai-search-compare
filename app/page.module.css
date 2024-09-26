@@ -11,6 +11,46 @@
   border-inline-end: 0 !important;
 }
 
+.menu :global(.ant-menu-title-content) {
+  font-size: 14px !important;
+}
+
+.menu :global(.ant-menu-title-content) > span {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.menu :global(.ant-menu-item) {
+  padding: 0 12px !important;
+}
+
 .search {
   margin-bottom: 20px;
+  display: flex !important;
+  justify-content: center;
+}
+
+.search :global(.ant-input-wrapper) {
+  max-width: 600px;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.answerCollapse :global(.ant-collapse-header) {
+  padding: 0 !important;
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+.answerCollapse :global(.ant-collapse-expand-icon) {
+  padding-inline-end: 6px !important;
+}
+
+.answerCollapse :global(.ant-collapse-content-box) {
+  padding: 0 !important;
 }

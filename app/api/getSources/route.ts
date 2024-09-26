@@ -44,9 +44,9 @@ export async function POST(request: Request) {
   } = await request.json();
   let results: Source[] = [];
 
-  results = JSON.parse(JSON.stringify(fakeData[engine]));
-  await delay(2000);
-  return NextResponse.json({ data: results, msg: "", code: 0 });
+  // results = JSON.parse(JSON.stringify(fakeData[engine]));
+  // await delay(2000);
+  // return NextResponse.json({ data: results, msg: "", code: 0 });
 
   try {
     if (engine === "exa") {

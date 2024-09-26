@@ -14,27 +14,29 @@ export async function POST(request: Request) {
   const sourcesWithContent = [...sources];
 
   const resultUrls = sources.filter((s) => !s.content).map((s) => s.url);
-  try {
-    const response = await fetch("https://api.exa.ai/contents", {
-      method: "POST",
-      headers: {
-        accept: "application/json",
-        "content-type": "application/json",
-        "x-api-key": EXA_API_KEY,
-      },
-      body: JSON.stringify({
-        ids: resultUrls,
-      }),
-    });
-    const rawJSON: EXAExtractResponse = await response.json();
-    rawJSON.results.forEach(({ text, url }) => {
-      const source = sourcesWithContent.find((s) => s.url === url);
-      if (source) {
-        source.content = text;
-      }
-    });
-  } catch (e) {
-    console.log("Error fetching text from source URLs: ", e);
+  if (resultUrls.length > 0) {
+    try {
+      const response = await fetch("https://api.exa.ai/contents", {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+          "content-type": "application/json",
+          "x-api-key": EXA_API_KEY,
+        },
+        body: JSON.stringify({
+          ids: resultUrls,
+        }),
+      });
+      const rawJSON: EXAExtractResponse = await response.json();
+      rawJSON.results.forEach(({ text, url }) => {
+        const source = sourcesWithContent.find((s) => s.url === url);
+        if (source) {
+          source.content = text;
+        }
+      });
+    } catch (e) {
+      console.log("Error fetching text from source URLs: ", e);
+    }
   }
 
   const mainAnswerPrompt = `

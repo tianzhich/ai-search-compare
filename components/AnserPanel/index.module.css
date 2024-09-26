@@ -1,0 +1,126 @@
+.container {
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* Markdown styles */
+.markdown-container {
+  font-family: Arial, sans-serif;
+  line-height: 1.4;
+  color: #333;
+  font-size: 14px;
+}
+
+.markdown-container h1,
+.markdown-container h2,
+.markdown-container h3,
+.markdown-container h4,
+.markdown-container h5,
+.markdown-container h6 {
+  font-weight: bold;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 0.3em;
+}
+
+.markdown-container h1 {
+  font-size: 1.5em;
+}
+
+.markdown-container h2 {
+  font-size: 1.4em;
+}
+
+.markdown-container h3 {
+  font-size: 1.3em;
+}
+
+.markdown-container h4 {
+  font-size: 1.2em;
+}
+
+.markdown-container h5 {
+  font-size: 1.1em;
+}
+
+.markdown-container h6 {
+  font-size: 1em;
+}
+
+.markdown-container p {
+  margin-bottom: .8em;
+}
+
+.markdown-container strong {
+  font-weight: bold;
+}
+
+.markdown-container em {
+  font-style: italic;
+}
+
+.markdown-container a {
+  color: #000;
+  vertical-align: super;
+  font-size: 12px;
+}
+
+.markdown-container code {
+  font-family: monospace;
+  font-size: 0.9em;
+  padding: 0.2em 0.4em;
+  background-color: #f6f8fa;
+  border-radius: 3px;
+}
+
+.markdown-container pre {
+  font-family: monospace;
+  font-size: 0.9em;
+  padding: 1em;
+  overflow: auto;
+  background-color: #f6f8fa;
+  border-radius: 3px;
+}
+
+.markdown-container pre code {
+  padding: 0;
+  background-color: transparent;
+}
+
+.markdown-container ul,
+.markdown-container ol {
+  margin-bottom: 1em;
+  padding-left: 2em;
+}
+
+.markdown-container ul li,
+.markdown-container ol li {
+  margin-bottom: 0.5em;
+}
+
+.markdown-container ul li {
+  list-style-type: disc;
+}
+
+.markdown-container ol li {
+  list-style-type: decimal;
+}
+
+.markdown-container blockquote {
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  border-left: 4px solid #ddd;
+  color: #666;
+}
+
+.markdown-container hr {
+  border: none;
+  border-top: 1px solid #ddd;
+  margin: 1.5em 0;
+}

@@ -4,7 +4,6 @@ export interface Source {
   title: string;
   url: string;
   content?: string;
-  favIcon?: string;
 }
 
 export interface EXAResponse {

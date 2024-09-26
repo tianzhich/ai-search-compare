@@ -1,5 +1,5 @@
 .sidebar {
-  width: 250px;
+  max-width: 250px;
   height: 100vh;
   position: relative;
   border-right: 1px solid rgba(5, 5, 5, 0.06);

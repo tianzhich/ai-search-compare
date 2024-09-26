@@ -41,6 +41,15 @@
 }
 
 .card :global(.ant-card-meta-description) {
+  display: flex;
+  align-items: center;
+}
+
+.card :global(.ant-card-meta-description) img {
+  margin-right: 4px;
+}
+
+.card :global(.ant-card-meta-description) span {
   font-size: 0.75rem !important;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -48,7 +57,7 @@
 }
 
 .card:hover {
-    box-shadow: none !important;
+  box-shadow: none !important;
 }
 
 .favicon {

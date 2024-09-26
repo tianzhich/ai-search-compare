@@ -9,3 +9,7 @@
     margin-top: 10px;
   }
 }
+
+.collapse :global(.ant-collapse-header) {
+  align-items: center !important;
+}

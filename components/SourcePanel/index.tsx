@@ -5,7 +5,7 @@ import styles from "./index.module.css";
 import { Source } from "@/app/types";
 
 export interface SourcePanelProps {
-  sources: Source[];
+  sources?: Source[];
   loading?: boolean;
 }
 
@@ -20,15 +20,26 @@ const SourcePanel = ({ sources, loading }: SourcePanelProps) => {
     ));
   };
 
-  const renderContent = () => {
-    return sources.map(({ favIcon, title, url }, index) => (
+  const renderContent = (sources: Source[]) => {
+    return sources.map(({ title, url }, index) => (
       <Col key={index} xs={24} sm={12} md={8} lg={6}>
         <a href={url} target="_blank" rel="noopener noreferrer">
           <Card hoverable={!loading} className={styles.card}>
-            {favIcon && (
-              <Image alt="favicon" src={favIcon} className={styles.favicon} />
-            )}
-            <Card.Meta title={title} description={new URL(url).hostname} />
+            <Card.Meta
+              title={title}
+              description={
+                <>
+                  <Image
+                    unoptimized
+                    src={`https://www.google.com/s2/favicons?domain=${url}&sz=128`}
+                    alt={url}
+                    width={16}
+                    height={16}
+                  />
+                  <span>{new URL(url).hostname}</span>
+                </>
+              }
+            />
           </Card>
         </a>
       </Col>
@@ -37,7 +48,15 @@ const SourcePanel = ({ sources, loading }: SourcePanelProps) => {
 
   return (
     <div className={styles.container}>
-      <Row gutter={[16, 16]}>{loading ? renderLoading() : renderContent()}</Row>
+      {loading || (sources && sources.length > 0) ? (
+        <Row gutter={[16, 16]}>
+          {loading ? renderLoading() : renderContent(sources as Source[])}
+        </Row>
+      ) : !sources ? (
+        "No sources found. Please search for something."
+      ) : (
+        "No sources found. Please try again."
+      )}
     </div>
   );
 };

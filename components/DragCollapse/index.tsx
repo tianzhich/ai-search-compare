@@ -8,10 +8,11 @@ import {
 } from "react-beautiful-dnd";
 import styles from "./index.module.css";
 import { DragOutlined } from "@ant-design/icons";
+import { ENGINE_ORDER_PREF_KEY, getPref, setPref } from "@/utils/storage";
 
 interface DragCollapseProps extends CollapseProps {
   items: (NonNullable<CollapseProps["items"]>[number] & {
-    id: string;
+    key: string;
   })[];
 }
 
@@ -43,8 +44,21 @@ const DragCollapse = ({
     const [removed] = reorderedItems.splice(source.index, 1);
     reorderedItems.splice(destination.index, 0, removed);
 
-    setOrder(reorderedItems.map((i) => i.id));
+    const newOrder = reorderedItems.map((i) => i.id);
+    setOrder(newOrder);
+    setPref(ENGINE_ORDER_PREF_KEY, newOrder);
   };
+
+  useEffect(() => {
+    async function initOrder() {
+      const prefOrder = await getPref(ENGINE_ORDER_PREF_KEY);
+      if (prefOrder) {
+        setOrder(prefOrder as string[]);
+      }
+    }
+
+    initOrder();
+  }, []);
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
@@ -56,11 +70,11 @@ const DragCollapse = ({
             className={styles.droppable}
           >
             {orderedItems.map((item, index) => {
-              const { id } = item;
-              const active = activeKey.includes(id);
+              const { key } = item;
+              const active = activeKey.includes(key);
 
               return (
-                <Draggable key={id} draggableId={id} index={index}>
+                <Draggable key={key} draggableId={key} index={index}>
                   {(provided, snapshot) => (
                     <div
                       ref={provided.innerRef}
@@ -79,17 +93,21 @@ const DragCollapse = ({
                           {
                             ...item,
                             extra: (
-                              <DragOutlined {...provided.dragHandleProps} />
+                              <>
+                                {item.extra}
+                                <DragOutlined {...provided.dragHandleProps} />
+                              </>
                             ),
                           },
                         ]}
-                        defaultActiveKey={active ? [id] : []}
+                        activeKey={active ? key : undefined}
                         onChange={() => {
                           const newActiveKeys = active
-                            ? activeKey.filter((key) => key !== id)
-                            : [...activeKey, id];
+                            ? activeKey.filter((k) => k !== key)
+                            : [...activeKey, key];
                           onChange?.(newActiveKeys as string[]);
                         }}
+                        className={styles.collapse}
                       />
                     </div>
                   )}
