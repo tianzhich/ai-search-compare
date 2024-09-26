@@ -1,4 +1,3 @@
-import { fakeData } from "@/app/data";
 import {
   EXAResponse,
   SearchEngine,
@@ -30,9 +29,9 @@ function parseJinaResponseText(input: string) {
   return result;
 }
 
-async function delay(time: number) {
-  return new Promise((resolve) => setTimeout(resolve, time));
-}
+// async function delay(time: number) {
+//   return new Promise((resolve) => setTimeout(resolve, time));
+// }
 
 export async function POST(request: Request) {
   const {
