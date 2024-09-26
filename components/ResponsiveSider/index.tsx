@@ -9,7 +9,9 @@ interface ResponsiveSiderProps {}
 const ResponsiveSider = ({
   children,
 }: PropsWithChildren<ResponsiveSiderProps>) => {
-  const [isCollapsed, setIsCollapsed] = useState(window.innerWidth <= 768);
+  const [isCollapsed, setIsCollapsed] = useState(
+    typeof window !== "undefined" ? window.innerWidth <= 768 : false
+  );
 
   useEffect(() => {
     const handleResize = () => {
