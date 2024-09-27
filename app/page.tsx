@@ -356,11 +356,11 @@ export default function Home() {
                       value={jinaApiKey}
                       onChange={(e) => {
                         const value = e.target.value.trim();
-                        e.stopPropagation();
                         setJinaApiKey(value);
                         setJinaApiKeyStorage(value);
                       }}
                       style={{ maxWidth: 400 }}
+                      onClick={(e) => e.stopPropagation()}
                     />
                   </Tooltip>
                 )}
