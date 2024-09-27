@@ -12,6 +12,7 @@ export interface HistoryItem {
 
 export const ENGINE_ORDER_PREF_KEY = "engine-order";
 export const HISTORY_KEY = "history";
+export const JINA_API_KEY = "jina-api-key";
 
 export async function addRecord(
   question: string,
@@ -87,4 +88,13 @@ export async function setPref(key: string, value: unknown) {
 
 export async function getPref(key: string) {
   return localForage.getItem(key);
+}
+
+export async function getJinaApiKey() {
+  const key = await localForage.getItem<string>(JINA_API_KEY);
+  return key || "";
+}
+
+export async function setJinaApiKey(value: string) {
+  return localForage.setItem(JINA_API_KEY, value);
 }

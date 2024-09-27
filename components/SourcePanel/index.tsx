@@ -3,15 +3,21 @@ import { Card, Col, Row, Skeleton } from "antd";
 import Image from "next/image";
 import styles from "./index.module.css";
 import { Source } from "@/app/types";
+import { NUM_RESULTS } from "@/app/api/getSources/route";
 
 export interface SourcePanelProps {
   sources?: Source[];
   loading?: boolean;
+  sourceCount?: number;
 }
 
-const SourcePanel = ({ sources, loading }: SourcePanelProps) => {
+const SourcePanel = ({
+  sources,
+  loading,
+  sourceCount = NUM_RESULTS,
+}: SourcePanelProps) => {
   const renderLoading = () => {
-    return Array.from({ length: 6 }).map((_, index) => (
+    return Array.from({ length: sourceCount }).map((_, index) => (
       <Col key={index} xs={24} sm={12} md={8} lg={6}>
         <Card className={styles.card} hoverable>
           <Skeleton active paragraph={{ rows: 1, width: "100%" }} />

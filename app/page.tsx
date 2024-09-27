@@ -15,6 +15,8 @@ import {
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   addRecord,
+  getJinaApiKey,
+  setJinaApiKey as setJinaApiKeyStorage,
   getRecords,
   HistoryItem,
   updateRecordAnswer,
@@ -22,9 +24,11 @@ import {
 } from "@/utils/storage";
 import { usePrevious } from "react-use";
 import { CopyOutlined } from "@ant-design/icons";
+import { NUM_RESULTS } from "./api/getSources/route";
 
 const SEARCH_ENGINE: SearchEngine[] = ["exa", "serper", "jina", "tavily"];
 const { Search } = Input;
+const JINA_FIXED_NUM_RESULTS = 5;
 
 export default function Home() {
   const [loadingMap, setLoadingMap] = useState<
@@ -60,6 +64,8 @@ export default function Home() {
   const pathname = usePathname();
   const { replace } = useRouter();
 
+  const [jinaApiKey, setJinaApiKey] = useState<string>();
+
   const updateSearchParams = useCallback(
     (key: string, value: string) => {
       const params = new URLSearchParams(searchParams);
@@ -82,7 +88,7 @@ export default function Home() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ question, engine }),
+        body: JSON.stringify({ question, engine, jinaApiKey }),
       })
         .then((res) => res.json())
         .then((resp) => {
@@ -98,7 +104,7 @@ export default function Home() {
           setLoadingMap((prev) => ({ ...prev, [engine]: false }));
         });
     },
-    []
+    [jinaApiKey]
   );
 
   const fetchSources = useCallback(
@@ -260,6 +266,17 @@ export default function Home() {
     fetchRecords(true);
   }, []);
 
+  useEffect(() => {
+    async function fetchJinaApiKey() {
+      const key = await getJinaApiKey();
+      if (key) {
+        setJinaApiKey(key);
+      }
+    }
+
+    fetchJinaApiKey();
+  }, []);
+
   return (
     <div className={styles.page}>
       <ResponsiveSider>
@@ -316,7 +333,40 @@ export default function Home() {
           items={SEARCH_ENGINE.map((engine) => ({
             id: engine,
             key: engine,
-            label: engine,
+            label: (
+              <>
+                {engine}{" "}
+                {engine === "jina" && (
+                  <Tooltip
+                    title={
+                      jinaApiKey ? undefined : (
+                        <>
+                          You can get your own{" "}
+                          <a target="__blank" href="https://jina.ai">
+                            jina api-key
+                          </a>{" "}
+                          by free.
+                        </>
+                      )
+                    }
+                  >
+                    <Input
+                      placeholder="Jina API Key"
+                      variant="filled"
+                      className={styles.jinaInput}
+                      value={jinaApiKey}
+                      onChange={(e) => {
+                        const value = e.target.value.trim();
+                        e.stopPropagation();
+                        setJinaApiKey(value);
+                        setJinaApiKeyStorage(value);
+                      }}
+                      style={{ maxWidth: 400 }}
+                    />
+                  </Tooltip>
+                )}
+              </>
+            ),
             extra: (
               <>
                 <Button
@@ -357,6 +407,9 @@ export default function Home() {
                   key="source"
                   sources={sourcesMap[engine]}
                   loading={loadingMap[engine]}
+                  sourceCount={
+                    engine === "jina" ? JINA_FIXED_NUM_RESULTS : NUM_RESULTS
+                  }
                 />
                 {sourcesMap[engine] && sourcesMap[engine].length > 0 && (
                   <Collapse

@@ -13,3 +13,8 @@
 .collapse :global(.ant-collapse-header) {
   align-items: center !important;
 }
+
+.collapse :global(.ant-collapse-header-text) {
+  display: inline-flex;
+  align-items: center;
+}

@@ -5,10 +5,9 @@ import {
   Source,
   TavilyResponse,
 } from "@/app/types";
-import { writeFile } from "fs";
 import { NextResponse } from "next/server";
 
-const NUM_RESULTS = 6;
+export const NUM_RESULTS = 6;
 
 function parseJinaResponseText(input: string) {
   const regex =
@@ -37,9 +36,11 @@ export async function POST(request: Request) {
   const {
     question,
     engine,
+    jinaApiKey,
   }: {
     question: string;
     engine: SearchEngine;
+    jinaApiKey?: string;
   } = await request.json();
   let results: Source[] = [];
 
@@ -135,7 +136,7 @@ export async function POST(request: Request) {
         url,
       }));
     } else if (engine === "jina") {
-      const JINA_API_KEY = process.env["JINA_API_KEY"];
+      const JINA_API_KEY = jinaApiKey || process.env["JINA_API_KEY"];
       if (!JINA_API_KEY) {
         throw new Error("JINA_API_KEY is required");
       }
@@ -148,7 +149,6 @@ export async function POST(request: Request) {
       });
 
       const text = await response.text();
-      writeFile("jina-response.txt", text, () => {});
       results = parseJinaResponseText(text);
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

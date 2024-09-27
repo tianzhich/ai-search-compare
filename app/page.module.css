@@ -54,3 +54,6 @@
 .answerCollapse :global(.ant-collapse-content-box) {
   padding: 0 !important;
 }
+.jinaInput {
+  margin-left: 10px !important;
+}
