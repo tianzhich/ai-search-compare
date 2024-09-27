@@ -3,18 +3,17 @@ import { Card, Col, Row, Skeleton } from "antd";
 import Image from "next/image";
 import styles from "./index.module.css";
 import { Source } from "@/app/types";
-import { NUM_RESULTS } from "@/app/api/getSources/route";
 
 export interface SourcePanelProps {
   sources?: Source[];
   loading?: boolean;
-  sourceCount?: number;
+  sourceCount: number;
 }
 
 const SourcePanel = ({
   sources,
   loading,
-  sourceCount = NUM_RESULTS,
+  sourceCount,
 }: SourcePanelProps) => {
   const renderLoading = () => {
     return Array.from({ length: sourceCount }).map((_, index) => (

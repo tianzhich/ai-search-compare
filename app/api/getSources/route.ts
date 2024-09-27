@@ -5,9 +5,8 @@ import {
   Source,
   TavilyResponse,
 } from "@/app/types";
+import { NUM_RESULTS } from "@/utils/constant";
 import { NextResponse } from "next/server";
-
-export const NUM_RESULTS = 6;
 
 function parseJinaResponseText(input: string) {
   const regex =

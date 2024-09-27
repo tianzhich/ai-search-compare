@@ -24,11 +24,10 @@ import {
 } from "@/utils/storage";
 import { usePrevious } from "react-use";
 import { CopyOutlined } from "@ant-design/icons";
-import { NUM_RESULTS } from "./api/getSources/route";
+import { JINA_FIXED_NUM_RESULTS, NUM_RESULTS } from "@/utils/constant";
 
 const SEARCH_ENGINE: SearchEngine[] = ["exa", "serper", "jina", "tavily"];
 const { Search } = Input;
-const JINA_FIXED_NUM_RESULTS = 5;
 
 export default function Home() {
   const [loadingMap, setLoadingMap] = useState<
